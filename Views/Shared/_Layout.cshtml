@@ -23,10 +23,22 @@
 
 
             </div>
-
+           
             <ul class="nav navbar-nav ">
                 <li>@Html.ActionLink("Početna", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                <li>@Html.ActionLink("Clanovi", "Index", "Clanovi", new { area = "" }, new { @class = "nav-link" })</li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Članovi <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a>@Html.ActionLink("Popis Članova", "Popis", "Clanovi", new { area = "" }, new { @class = "nav-link" })</a></li>
+                        <li><a>@Html.ActionLink("Početna o članovima", "Index", "Clanovi", new { area = "" }, new { @class = "nav-link" })</a></li>
+                        <li><a href="#">Postani član</a></li>
+                        <li><a href="#">Uvjeti članstva</a></li>
+                    </ul>
+                </li>
+
+                <li><a>Galerija</a></li>
+
+                <li><a>Kontakt</a></li>
 
             </ul>
 
