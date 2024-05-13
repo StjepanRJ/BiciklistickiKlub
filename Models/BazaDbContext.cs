@@ -12,5 +12,7 @@ namespace BiciklistickiKlub.Models
     {
         public DbSet<Clan> PopisClanova { get; set; }
         public DbSet<Funkcija> PopisFunkcija { get; set; }
+        public DbSet<Korisnik> PopisKorisnika { get; set; }
+        public DbSet<Ovlast> PopisOvlasti { get; set; }
     }
 }

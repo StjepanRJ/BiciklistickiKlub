@@ -207,5 +207,10 @@ namespace BiciklistickiKlub.Controllers
 
             return View("BrisiStatus");
         }
+
+        public ActionResult Galerija()
+        {
+            return View();
+        }
     }
 }

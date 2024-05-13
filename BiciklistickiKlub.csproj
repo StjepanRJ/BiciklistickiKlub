@@ -163,6 +163,7 @@
     <Compile Include="Controllers\ClanoviController.cs" />
     <Compile Include="Controllers\FunkcijeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\KorisniciController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -241,6 +242,8 @@
     <Content Include="Views\Funkcije\Edit.cshtml" />
     <Content Include="Views\Funkcije\Index.cshtml" />
     <Content Include="Views\Clanovi\_PartialPopis.cshtml" />
+    <Content Include="Views\Clanovi\Galerija.cshtml" />
+    <Content Include="Views\Korisnici\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

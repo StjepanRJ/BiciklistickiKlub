@@ -1,0 +1,31 @@
+﻿@using BiciklistickiKlub.Models
+@model List<Korisnik>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Korisničko ime</th>
+            <th>Email</th>
+            <th>Prezime i ime</th>
+            <th>Ovlasti</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var kor in Model)
+            {
+                <tr>
+                    <td>@kor.KorisničkoIme</td>
+                    <td>@kor.Email</td>
+                    <td>@kor.PrezimeIme</td>
+                    <td>@(kor.Ovlast?.Naziv</td>
+                </tr>
+            }
+    </tbody>
+</table>
+

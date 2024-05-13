@@ -7,10 +7,10 @@ namespace BiciklistickiKlub.Models
 {
     public enum KategorijaClana
     {
-        Prva = 1,
-        Druga = 2,
-        Treca = 3,
-        Cetvrta = 4,
-        Peta = 5
+        VETERAN = 1,
+        ELITE = 2,
+        SENIOR = 3,
+        KADET = 4,
+        LIMAČ = 5
     }
 }
