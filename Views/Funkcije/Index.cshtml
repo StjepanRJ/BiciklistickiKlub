@@ -1,0 +1,43 @@
+﻿@model IEnumerable<BiciklistickiKlub.Models.Funkcija>
+
+@{
+    ViewBag.Title = "Popis funkcija";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Popis funkcija</h2>
+
+<p>
+    <a href="@Url.Action("Create", "Funkcije")" class="btn btn-success">
+        <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Kreiranje novog
+    </a>
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Naziv)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Aktivnost)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Naziv)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Aktivnost)
+        </td>
+        <td>
+
+            @Html.ActionLink("Detalji", "Details", new { id = item.Sifra }, new { @class = "btn btn-warning btn-sm"})
+            @Html.ActionLink("Ažuriraj", "Edit", new { id = item.Sifra }, new {@class = "btn btn-info btn-sm"})
+            @Html.ActionLink("Izbriši", "Delete", new { id = item.Sifra }, new {@class = "btn btn-danger btn-sm"})
+        </td>
+    </tr>
+}
+
+</table>

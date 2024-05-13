@@ -1,0 +1,111 @@
+﻿@using BiciklistickiKlub.Models
+@model Clan
+
+@{
+    ViewBag.Title = "Detalji";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    string spol = "";
+    if (Model.Spol == "M")
+    {
+        spol = "Muški";
+    }
+    else
+    {
+        spol = "Ženski";
+    }
+}
+
+<h2>Detalji o članovima kluba</h2>
+@*
+    Prezime: @Model.Prezime
+    <br />
+    Ime: @Model.Ime
+    <br />
+    Spol: @spol
+    <br />
+    RedovanClan: @Model.RedovanClan
+    <br />
+    Oib: @Model.Oib
+    <br />
+    Datum rođenja: @Model.DatumRodjenja.ToString("dd.MM.yyyy")
+    <br />
+    Kategorija člana: @Model.KategorijaClana
+    <br />
+*@
+
+<div class="row">
+    <div class="col-md-2">
+        <strong>Prezime:</strong>
+    </div>
+    <div class="col-md-10">
+        @Model.Prezime
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-2">
+        <strong>Ime:</strong>
+    </div>
+    <div class="col-md-10">
+        @Model.Ime
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-2">
+        <strong>Spol:</strong>
+    </div>
+    <div class="col-md-10">
+        @spol
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-2">
+        <strong>Redovni član:</strong>
+    </div>
+    <div class="col-md-10">
+        @Model.RedovanClan
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-2">
+        <strong>Oib:</strong>
+    </div>
+    <div class="col-md-10">
+        @Model.Oib
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-2">
+        <strong>Datum rođenja:</strong>
+    </div>
+    <div class="col-md-10">
+        @Model.DatumRodjenja.ToString("dd.MM.yyyy")
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-2">
+        <strong>Kategorija člana:</strong>
+    </div>
+    <div class="col-md-10">
+        @Model.KategorijaClana
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-2">
+        <strong>Funkcija:</strong>
+    </div>
+    <div class="col-md-10">
+        @if (Model.UpisanaFunkcija != null)
+            {
+                @Model.UpisanaFunkcija.Naziv
+            }
+    </div>
+</div>
+
+<br />
+
+@Html.ActionLink("Povratak na popis članova", "Popis", "Clanovi", null, new { @class = "btn btn-primary btn-sm" })

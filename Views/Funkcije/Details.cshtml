@@ -1,0 +1,42 @@
+﻿@model BiciklistickiKlub.Models.Funkcija
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Podaci o funkciji</h2>
+
+<div>
+    <h4>Funkcije</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Sifra)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Sifra)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Naziv)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Naziv)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Aktivnost)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Aktivnost)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Ažuriranje", "Edit", new { id = Model.Sifra }) |
+    @Html.ActionLink("Povratak na popis", "Index")
+</p>

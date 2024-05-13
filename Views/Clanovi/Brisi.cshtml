@@ -1,0 +1,25 @@
+﻿@using BiciklistickiKlub.Models
+@model Clan
+@{
+    
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Ttile</h2>
+
+<strong>Jeste li sigurni da želite izbrisati studenta @Model.PrezimeIme (OIB: @Model.Oib) </strong>
+
+@using (Html.BeginForm("Brisi", "Clanovi"))
+            {
+                @Html.AntiForgeryToken();
+
+                <button type="submit" class="btn btn-danger" >
+                    <span class="glyphicon glypgicon-ok" aria-hidden="true"></span> Izbriši
+                </button>
+
+                <br />
+                <br />
+
+                @Html.ActionLink("Odustani", "Popis");
+            }
+

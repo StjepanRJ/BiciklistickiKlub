@@ -1,0 +1,78 @@
+﻿@using BiciklistickiKlub.Models
+@using PagedList.Mvc
+@model PagedList.IPagedList<Clan>
+    @{ 
+        AjaxOptions ajaxOpt = new AjaxOptions()
+        {
+            UpdateTargetId = "popisClanova",
+            InsertionMode = InsertionMode.Replace,
+            HttpMethod = "GET",
+            OnBegin = "LoadingRow"
+        };
+    }
+
+
+
+<div id="popisClanova">
+    <table id="tableClanovi" class="table table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>
+                    @Ajax.ActionLink("Prezime", "PopisPartial",
+                   new  { funkcija = ViewBag.Funkcija, naziv = ViewBag.Naziv, spol = ViewBag.Spol, sort = ViewBag.NazivSort   }, ajaxOpt)
+                    
+                </th>
+                <th>Ime</th>
+                <th>Oib</th>
+                <th>
+                    @Ajax.ActionLink("Funkcija", "PopisPArtial",
+                   new { funkcija = ViewBag.Funkcija, naziv = ViewBag.Naziv, spol = ViewBag.Spol, sort = ViewBag.FunkcijaSort }, ajaxOpt)
+                </th>
+                <th>Redovni</th>
+                <th>Akcije</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Any())
+             {
+                foreach (var clan in Model)
+                {
+                    <tr>
+                        <td>@clan.Id</td>
+                        <td>@clan.Prezime</td>
+                        <td>@clan.Ime</td>
+                        <td>@clan.Oib</td>
+                        <td>@(clan.UpisanaFunkcija?.Naziv)</td>
+                        <td>@Html.CheckBox("chbRedovan", clan.RedovanClan, new { @disabled = true })</td>
+                        <td>
+                            @Html.ActionLink("Info", "Detalji", new { id = clan.Id }, new { @class = "btn btn-info btn-sm" })
+                            @Html.ActionLink("Ažuriraj", "Azuriraj", new { id = clan.Id }, new { @class = "btn btn-warning btn-sm" })
+                            @Html.ActionLink("Izbriši", "Brisi", new { id = clan.Id }, new { @class = "btn btn-danger btn-sm" })
+                        </td>
+                    </tr>
+                }
+             }
+             else
+             {
+                <tr>
+                    <td colspan="7" style="text-align:center;"> Nema rezultata pretrage</td>
+                </tr>
+             }
+        </tbody>
+    </table>
+    <div id="pager">
+        Ukupno rezultata: @Model.TotalItemCount <br />
+
+        Stranica @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) od @Model.PageCount
+
+        @Html.PagedListPager(Model, page => Url.Action("PopisPartial",
+       new { page, funkcija = ViewBag.Funkcija, naziv = ViewBag.Naziv, spol = ViewBag.Spol, sort = ViewBag.Sortiranje}),
+       PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(ajaxOpt))
+    </div>
+</div>
+
+
+
+
+

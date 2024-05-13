@@ -1,0 +1,61 @@
+﻿
+@{
+    ViewBag.Title = "Popis clanova";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    AjaxOptions ajaxOpt = new AjaxOptions()
+    {
+        UpdateTargetId = "popisClanova",
+        InsertionMode = InsertionMode.Replace,
+        HttpMethod = "GET",
+        OnBegin = "LoadingRow"
+    };
+}
+
+<h2>Popis clanova</h2>
+<a href="@Url.Action("Azuriraj","Clanovi")" class="btn btn-success ">
+    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Kreiranje novog člana
+</a>
+<br />
+<br />
+
+@using (Ajax.BeginForm("PopisPartial", "Clanovi", ajaxOpt, new { @class = "form-inline", id ="formPopisClanova" }))
+{
+    @Html.TextBox("naziv", "", new { @class = "form-control", placeholder = "Naziv člana" })
+
+    @Html.DropDownList("Funkcija", new SelectList(ViewBag.Funkcije, "Sifra", "Naziv", ""), "Sve funkcije", new { @class = "form-control", style = "margin-left: 10px"})
+    <div class="form-group" style="margin-left: 10px">
+        <label class="radio-inline">
+            @Html.RadioButton("spol", "M") Muški
+        </label>
+        <label class="radio-inline">
+            @Html.RadioButton("spol", "Z") Ženski
+        </label>
+        <label class="radio-inline">
+            @Html.RadioButton("spol", "") Svi
+        </label>
+    </div>
+    <button type="submit" class="btn btn-primary">
+        <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Traži
+    </button>
+}
+
+<br />
+
+
+@{ 
+    Html.RenderAction("PopisPartial", new { naziv = "",spol = "", funkcije = "" });
+}
+
+@section Scripts{
+    <script type="text/javascript">
+        function LoadingRow() {
+            $("#tableClanovi tbody").empty();
+
+            $("#tableClanovi tbody").append('<tr><td colspan="7" style="text-align: center"> Pretraga u tijeku... </td></tr>');
+
+            $("#pager").empty();
+        }
+    </script>
+}
+
