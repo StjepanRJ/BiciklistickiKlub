@@ -1,0 +1,46 @@
+﻿@using BiciklistickiKlub.Models
+@model PromjenaLozinke
+@{
+    ViewBag.Title = "PromjenaLozinke";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Promjena Lozinke</h2>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.StaraLozinka, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.StaraLozinka, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.StaraLozinka, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.NovaLozinka, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.NovaLozinka, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.NovaLozinka, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.StaraLozinkaPonovljena, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.StaraLozinkaPonovljena, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.StaraLozinkaPonovljena, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <button type="submit" class="btn btn-success">
+                <span class="glyphicon glyphicon-floppy-disk" aria-hidden="false"></span> Spremi
+            </button>
+        </div>
+    </div>
+}
+

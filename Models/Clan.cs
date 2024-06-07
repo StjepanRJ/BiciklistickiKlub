@@ -52,6 +52,10 @@ namespace BiciklistickiKlub.Models
         [Display(Name = "Kategorija Člana")]
         public KategorijaClana KategorijaClana { get; set; }
 
+        [Column("kategorija_clanstva")]
+        [Display(Name = "Kategorija članstva")]
+        public KategorijaClanstva KategorijaClanstva { get; set; }
+
         [Column("redovan_clan")]
         [Display(Name = "Redovan član")]
         public bool RedovanClan { get; set; }

@@ -18,14 +18,20 @@
     </thead>
     <tbody>
         @foreach(var kor in Model)
+        {
+            if (kor.Aktivan == true)
             {
+                
                 <tr>
-                    <td>@kor.KorisničkoIme</td>
+                    <td>@kor.KorisnickoIme</td>
                     <td>@kor.Email</td>
                     <td>@kor.PrezimeIme</td>
-                    <td>@(kor.Ovlast?.Naziv</td>
+                    <td>@(kor.Ovlast?.Naziv)</td>
+                    <td>@Html.ActionLink("Ažuriraj", "Azuriraj", new { email = kor.Email })</td>
                 </tr>
             }
+        }
+
     </tbody>
 </table>
 

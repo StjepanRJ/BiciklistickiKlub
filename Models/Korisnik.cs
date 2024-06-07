@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Microsoft.SqlServer.Server;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Web;
 
 namespace BiciklistickiKlub.Models
@@ -14,14 +16,14 @@ namespace BiciklistickiKlub.Models
         [Column("korisnicko_ime")]
         [Display(Name = "Korisničko ime")]
         [Required]
-        public string KorisničkoIme { get; set; }
+        public string KorisnickoIme { get; set; }
 
         [Display(Name = "Email")]
         [Required]
         [EmailAddress]
         public string Email { get; set; }
 
-
+        //[Required]
         public string Lozinka { get; set; }
 
         [Display(Name = "Prezime")]
@@ -43,7 +45,7 @@ namespace BiciklistickiKlub.Models
 
         [Column("ovlast")]
         [Display(Name = "Ovlast")]
-        [Required]
+        //[Required]
         [ForeignKey("Ovlast")]
         public string SifraOvlasti { get; set; }
 
@@ -62,5 +64,10 @@ namespace BiciklistickiKlub.Models
         [NotMapped]
         [Compare("LozinkaUnos", ErrorMessage = "Loznike moraju biti jednake!")]
         public string LozinkaUnos2 { get; set; }
+
+        [Display(Name = "Aktivnost korisničkog računa")]
+        [Column("aktivan")]
+        //[Required]
+        public bool Aktivan { get; set; }
     }
 }

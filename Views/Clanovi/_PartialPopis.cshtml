@@ -20,8 +20,8 @@
                 <th>Id</th>
                 <th>
                     @Ajax.ActionLink("Prezime", "PopisPartial",
-                   new  { funkcija = ViewBag.Funkcija, naziv = ViewBag.Naziv, spol = ViewBag.Spol, sort = ViewBag.NazivSort   }, ajaxOpt)
-                    
+                   new { funkcija = ViewBag.Funkcija, naziv = ViewBag.Naziv, spol = ViewBag.Spol, sort = ViewBag.NazivSort }, ajaxOpt)
+
                 </th>
                 <th>Ime</th>
                 <th>Oib</th>
@@ -29,8 +29,12 @@
                     @Ajax.ActionLink("Funkcija", "PopisPArtial",
                    new { funkcija = ViewBag.Funkcija, naziv = ViewBag.Naziv, spol = ViewBag.Spol, sort = ViewBag.FunkcijaSort }, ajaxOpt)
                 </th>
-                <th>Redovni</th>
-                <th>Akcije</th>
+                <th>Kategorija članstva</th>
+                @if (User.Identity.IsAuthenticated && ((User as BiciklistickiKlub.Misc.LogiranKorisnik).IsInRole(BiciklistickiKlub.Misc.OvlastiKorisnik.Administrator) 
+                    || (User as BiciklistickiKlub.Misc.LogiranKorisnik).IsInRole(BiciklistickiKlub.Misc.OvlastiKorisnik.Moderator)))
+                {
+                    <th>Akcije</th>
+                }
             </tr>
         </thead>
         <tbody>
@@ -44,11 +48,20 @@
                         <td>@clan.Ime</td>
                         <td>@clan.Oib</td>
                         <td>@(clan.UpisanaFunkcija?.Naziv)</td>
-                        <td>@Html.CheckBox("chbRedovan", clan.RedovanClan, new { @disabled = true })</td>
+                        <td>@clan.KategorijaClanstva</td>
+                        
+                        
                         <td>
-                            @Html.ActionLink("Info", "Detalji", new { id = clan.Id }, new { @class = "btn btn-info btn-sm" })
-                            @Html.ActionLink("Ažuriraj", "Azuriraj", new { id = clan.Id }, new { @class = "btn btn-warning btn-sm" })
-                            @Html.ActionLink("Izbriši", "Brisi", new { id = clan.Id }, new { @class = "btn btn-danger btn-sm" })
+                            @if (User.Identity.IsAuthenticated && ((User as BiciklistickiKlub.Misc.LogiranKorisnik).IsInRole(BiciklistickiKlub.Misc.OvlastiKorisnik.Moderator) || 
+                                (User as BiciklistickiKlub.Misc.LogiranKorisnik).IsInRole(BiciklistickiKlub.Misc.OvlastiKorisnik.Administrator)))
+                            {
+                                @Html.ActionLink("Info", "Detalji", new { id = clan.Id }, new { @class = "btn btn-info btn-sm" })
+                            }
+                            @if (User.Identity.IsAuthenticated && (User as BiciklistickiKlub.Misc.LogiranKorisnik).IsInRole(BiciklistickiKlub.Misc.OvlastiKorisnik.Administrator))
+                            {
+                                @Html.ActionLink("Ažuriraj", "Azuriraj", new { id = clan.Id }, new { @class = "btn btn-warning btn-sm" })
+                                @Html.ActionLink("Izbriši", "Brisi", new { id = clan.Id }, new { @class = "btn btn-danger btn-sm" })
+                            }
                         </td>
                     </tr>
                 }

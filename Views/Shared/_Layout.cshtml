@@ -30,19 +30,54 @@
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">Članovi <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a>@Html.ActionLink("Popis Članova", "Popis", "Clanovi", new { area = "" }, new { @class = "nav-link" })</a></li>
-                        <li><a>@Html.ActionLink("Početna o članovima", "Index", "Clanovi", new { area = "" }, new { @class = "nav-link" })</a></li>
                         <li><a href="#">Postani član</a></li>
                         <li><a href="#">Uvjeti članstva</a></li>
                     </ul>
                 </li>
 
                 <li>@Html.ActionLink("Galerija", "Galerija", "Clanovi", new { area = "" }, new { @class = "nav-link" })</li>
-                
 
                 <li><a>Kontakt</a></li>
 
-            </ul>
+                @if (User.Identity.IsAuthenticated && (User as BiciklistickiKlub.Misc.LogiranKorisnik).IsInRole(BiciklistickiKlub.Misc.OvlastiKorisnik.Administrator))
+                {
 
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Admin <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                            <li>@Html.ActionLink("Korisnici", "Index", "Korisnici") </li>
+                            <li>@Html.ActionLink("Funkcije članova", "Index", "Funkcije") </li>
+                            <li>@Html.ActionLink("Upravljanje liječnićkima", "Index", "Lijecnicki") </li>
+                        </ul>
+                    </li>
+                }
+
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <li>@Html.ActionLink(((User as BiciklistickiKlub.Misc.LogiranKorisnik).PrezimeIme), "Index", "Home")</li>
+
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Profil<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                           
+                            <li>@Html.ActionLink("Promjena lozinke ", "PromjenaLozinke", "Korisnici") </li>
+                            <li>@Html.ActionLink("Odjava", "Odjava", "Korisnici")</li>
+                        </ul>
+                    </li>
+
+                    
+
+                }
+                else
+                {
+                    <li>@Html.ActionLink("Registracija", "Registracija", "Korisnici")</li>
+                    <li>@Html.ActionLink("Prijava", "Prijava", "Korisnici")</li>
+                }
+            </ul>
         </div>
     </nav>
 

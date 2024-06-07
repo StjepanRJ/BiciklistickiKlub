@@ -11,8 +11,13 @@ namespace BiciklistickiKlub.Models
     public class BazaDbContext : DbContext
     {
         public DbSet<Clan> PopisClanova { get; set; }
+
         public DbSet<Funkcija> PopisFunkcija { get; set; }
+
         public DbSet<Korisnik> PopisKorisnika { get; set; }
+       
         public DbSet<Ovlast> PopisOvlasti { get; set; }
+
+        public DbSet<Lijecnicki> PopisLijecnickih { get; set; }
     }
 }

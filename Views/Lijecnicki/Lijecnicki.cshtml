@@ -1,0 +1,42 @@
+﻿@using BiciklistickiKlub.Models
+@model List<Lijecnicki>
+
+
+
+@{
+    ViewBag.Title = "Lijecnicki";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Liječnićki pregled</h2>
+
+<table class="table table-striped">
+
+    <tbody>
+        @foreach (var kor in Model)
+        {
+            if (((User as BiciklistickiKlub.Misc.LogiranKorisnik).KorisnickoIme) == kor.KorisnickoIme && kor.Obavljen == false)
+            {
+            <thead>
+                <tr>
+                    <th>Korisničko ime</th>
+                    <th>Mjesto</th>
+                    <th>Naziv bolnice</th>
+                    <th>Datum</th>
+                </tr>
+            </thead>
+            <tr>
+                <td>@kor.KorisnickoIme</td>
+                <td>@kor.Mjesto</td>
+                <td>@kor.NazivBolnice</td>
+                <td>@kor.DatumLijecnickog</td>
+            </tr>
+        }
+        else
+        {
+            <h3>Nemate zakazanih liječnićkih pregleda</h3>
+        }
+    }
+        </tbody>
+    </table>
+

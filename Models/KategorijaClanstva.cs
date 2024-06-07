@@ -5,12 +5,11 @@ using System.Web;
 
 namespace BiciklistickiKlub.Models
 {
-    public enum KategorijaClana
+    public enum KategorijaClanstva
     {
-        Veteran = 1,
-        Elite = 2,
-        Senior = 3,
-        Kadet = 4,
-        Limač = 5
+        Maloljetan = 1,
+        Pridružen = 2,
+        Redovan = 3,
+        
     }
 }

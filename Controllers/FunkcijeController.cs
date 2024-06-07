@@ -5,11 +5,15 @@ using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web;
+using System.Web.DynamicData;
 using System.Web.Mvc;
+using System.Web.Security;
+using BiciklistickiKlub.Misc;
 using BiciklistickiKlub.Models;
 
 namespace BiciklistickiKlub.Controllers
 {
+    [Authorize(Roles = OvlastiKorisnik.Administrator)]
     public class FunkcijeController : Controller
     {
         private BazaDbContext db = new BazaDbContext();
@@ -110,9 +114,17 @@ namespace BiciklistickiKlub.Controllers
         public ActionResult DeleteConfirmed(string id)
         {
             Funkcija funkcije = db.PopisFunkcija.Find(id);
-            db.PopisFunkcija.Remove(funkcije);
-            db.SaveChanges();
+
+            var clanovi = db.PopisClanova.FirstOrDefault(x => x.SifraFunkcije == id);
+
+            if (clanovi == null) {
+                db.PopisFunkcija.Remove(funkcije);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            //return View(funkcije);
             return RedirectToAction("Index");
+
         }
 
         protected override void Dispose(bool disposing)

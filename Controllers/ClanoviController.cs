@@ -1,4 +1,5 @@
-﻿using BiciklistickiKlub.Models;
+﻿using BiciklistickiKlub.Misc;
+using BiciklistickiKlub.Models;
 using PagedList;
 using System;
 using System.Collections.Generic;
@@ -9,10 +10,13 @@ using System.Web.Mvc;
 
 namespace BiciklistickiKlub.Controllers
 {
+    [Authorize]
     public class ClanoviController : Controller
     {
         BazaDbContext bazaPodataka = new BazaDbContext();
+
         // GET: Clanovi
+        [AllowAnonymous]
         public ActionResult Index()
         {
             ViewBag.Title = "Početna o članovima";
@@ -20,6 +24,7 @@ namespace BiciklistickiKlub.Controllers
             return View();
         }
 
+        [AllowAnonymous]
         public ActionResult Popis()
         {
 
@@ -31,6 +36,7 @@ namespace BiciklistickiKlub.Controllers
             return View();
         }
 
+        [AllowAnonymous]
         public ActionResult PopisPartial(string naziv, string spol, string funkcija, string sort, int? page)
         {
             ViewBag.Sortiranje = sort;
@@ -208,6 +214,7 @@ namespace BiciklistickiKlub.Controllers
             return View("BrisiStatus");
         }
 
+        [AllowAnonymous]
         public ActionResult Galerija()
         {
             return View();

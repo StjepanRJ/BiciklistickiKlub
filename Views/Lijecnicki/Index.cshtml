@@ -1,0 +1,46 @@
+﻿@using BiciklistickiKlub.Models
+@model List<Lijecnicki>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+<a href="@Url.Action("Azuriraj","Lijecnicki")" class="btn btn-success ">
+    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Kreiranje novog člana
+</a>
+
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Korisničko ime</th>
+            <th>Mjesto</th>
+            <th>Naziv bolnice</th>
+            <th>Datum</th>
+            <th>Obavljen</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var kor in Model)
+        {
+
+
+            <tr>
+                <td>@kor.KorisnickoIme</td>
+                <td>@kor.Mjesto</td>
+                <td>@kor.NazivBolnice</td>
+                <td>@kor.DatumLijecnickog</td>
+                <td>@kor.Obavljen</td>
+                <td>
+
+                    
+                    @Html.ActionLink("Ažuriraj", "Azuriraj", new { id = kor.Id }, new { @class = "btn btn-info btn-sm" })
+                   
+                </td>
+            </tr>
+
+        }
+
+    </tbody>
+</table>

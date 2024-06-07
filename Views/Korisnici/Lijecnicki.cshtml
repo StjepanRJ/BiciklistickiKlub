@@ -1,0 +1,17 @@
+﻿@using BiciklistickiKlub.Models 
+@model List<Korisnik>
+
+@{
+    ViewBag.Title = "Lijecnicki";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Lijecnicki</h2>
+
+@foreach (var kor in Model)
+{
+if (((User as BiciklistickiKlub.Misc.LogiranKorisnik).KorisnickoIme) == kor.KorisnickoIme)
+{
+    @kor.KorisnickoIme
+}
+}
