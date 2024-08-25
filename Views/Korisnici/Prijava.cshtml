@@ -22,7 +22,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.Lozinka, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.PasswordFor(model => model.Lozinka,  new { @class = "form-control"  })
+            @Html.PasswordFor(model => model.Lozinka, new { @class = "form-control" })
         </div>
     </div>
 
@@ -33,6 +33,12 @@
             </button>
         </div>
     </div>
+    <div class="form-group">
+        <button onclick="'@Url.Action("Registracija", "Korisnici")' " class="btn btn-link">
+            Registracija
+        </button>
+    </div>
+
 </div>
 
 }

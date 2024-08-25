@@ -1,0 +1,36 @@
+﻿
+@{
+    ViewBag.Title = "UrediPost";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>UrediPost</h2>
+
+@model BiciklistickiKlub.Models.Post
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div>
+        @Html.LabelFor(m => m.Sadrzaj)
+        @Html.TextAreaFor(m => m.Sadrzaj)
+    </div>
+    <div>
+        @Html.ValidationMessageFor(model => model.TemaId, "", new { @class = "text-danger" })
+        @Html.HiddenFor(m => m.TemaId)
+
+    </div>
+    <div>
+        @Html.ValidationMessageFor(model => model.KorisnickoIme, "", new { @class = "text-danger" })
+        @Html.HiddenFor(m => Model.KorisnickoIme)
+
+    </div>
+    <div>
+        @Html.ValidationMessageFor(model => model.DatumKreiranja, "", new { @class = "text-danger" })
+        @Html.HiddenFor(m => m.DatumKreiranja)
+
+    </div>
+    <input type="submit" value="Kreiraj" />
+
+}

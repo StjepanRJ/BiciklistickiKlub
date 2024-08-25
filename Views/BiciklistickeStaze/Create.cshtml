@@ -1,0 +1,72 @@
+﻿@using BiciklistickiKlub.Models
+@model BiciklistickaStaza
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Create</h2>
+
+@{
+    ViewBag.Title = "Create Bike Route";
+}
+
+<h2>Create Bike Route</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <div class="form-group">
+            @Html.LabelFor(model => model.Ime, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBox("name", null, new { @class = "form-control", @placeholder = "Enter route name" })
+            </div>
+        </div>
+
+        <div id="map" style="width: 100%; height: 500px;"></div>
+
+        <input type="hidden" id="geoJson" name="geoJson" />
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save Route" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.css" />
+
+    <script>
+        var map = L.map('map').setView([45.8150, 15.9819], 13); // Promenite koordinate i zoom nivo po potrebi
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+        }).addTo(map);
+
+        var drawnItems = new L.FeatureGroup();
+        map.addLayer(drawnItems);
+
+        var drawControl = new L.Control.Draw({
+            edit: {
+                featureGroup: drawnItems
+            }
+        });
+        map.addControl(drawControl);
+
+        map.on(L.Draw.Event.CREATED, function (e) {
+            var type = e.layerType,
+                layer = e.layer;
+
+            drawnItems.addLayer(layer);
+
+            var geojson = layer.toGeoJSON();
+            document.getElementById('geoJson').value = JSON.stringify(geojson);
+        });
+    </script>
+}

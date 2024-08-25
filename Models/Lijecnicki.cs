@@ -20,6 +20,7 @@ namespace BiciklistickiKlub.Models
         [Required]
         public string KorisnickoIme { get; set; }
 
+
         [Column("naziv_bolnice")]
         [Display(Name = "Naziv bolnice")]
         [Required(ErrorMessage = "{0} je obavezno")]
@@ -34,7 +35,7 @@ namespace BiciklistickiKlub.Models
 
         [Column("datum_lijecnickog")]
         [Display(Name = "Datum liječnićkog")]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString =  "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Required(ErrorMessage = "{0} je obavezan")]
         [DataType(DataType.Date)]
         public DateTime DatumLijecnickog { get; set; }

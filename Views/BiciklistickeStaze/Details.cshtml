@@ -1,0 +1,36 @@
+﻿
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+@model BiciklistickiKlub.Models.BiciklistickaStaza
+
+@{
+    ViewBag.Title = "Route Details";
+}
+
+
+<p>Entered by: @Model.Id on @Model.Datum.ToString("dd.MM.yyyy")</p>
+
+<div id="map" style="width: 100%; height: 500px;"></div>
+
+@section Scripts {
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script>
+        var map = L.map('map').setView([45.8150, 15.9819], 13); // Promenite koordinate i zoom nivo po potrebi
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+        }).addTo(map);
+
+        var geoJsonData = @Html.Raw(Model.GeoJson);
+
+        var geojsonLayer = L.geoJSON(JSON.parse(geoJsonData));
+        geojsonLayer.addTo(map);
+
+        map.fitBounds(geojsonLayer.getBounds());
+    </script>
+}

@@ -19,5 +19,15 @@ namespace BiciklistickiKlub.Models
         public DbSet<Ovlast> PopisOvlasti { get; set; }
 
         public DbSet<Lijecnicki> PopisLijecnickih { get; set; }
+
+        public DbSet<Kategorija> PopisKategorija { get; set; }
+
+        public DbSet<Tema> PopisTema { get; set; }
+
+        public DbSet<Post> PopisPostova { get; set; }
+
+        public DbSet<BiciklistickaStaza> PopisBiciklistickihStaza { get; set; }
+
+        
     }
 }

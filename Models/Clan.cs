@@ -34,10 +34,11 @@ namespace BiciklistickiKlub.Models
         }
 
         [Display(Name = "Spol")]
+        [Required(ErrorMessage = "{0} je obavezno")]
         public string Spol { get; set; }
 
         [Display(Name = "OIB")]
-        [Required(ErrorMessage = "{0} je obavezno")]
+        [Required(ErrorMessage = "{0} je obavezan")]
         [StringLength(11, MinimumLength = 11, ErrorMessage = "{0} mora biti duljine {1} znakova")]
         public string Oib { get; set; }
 
@@ -49,15 +50,19 @@ namespace BiciklistickiKlub.Models
         public DateTime DatumRodjenja { get; set; }
 
         [Column("kategorija_clana")]
+        [Required(ErrorMessage = "{0} je obavezan")]
         [Display(Name = "Kategorija Člana")]
+        
         public KategorijaClana KategorijaClana { get; set; }
 
         [Column("kategorija_clanstva")]
         [Display(Name = "Kategorija članstva")]
+        [Required(ErrorMessage = "{0} je obavezan")]
         public KategorijaClanstva KategorijaClanstva { get; set; }
 
         [Column("redovan_clan")]
         [Display(Name = "Redovan član")]
+        [Required]
         public bool RedovanClan { get; set; }
 
         [Display(Name = "Funkcija")]

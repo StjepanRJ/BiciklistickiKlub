@@ -1,0 +1,170 @@
+﻿@using BiciklistickiKlub.Models
+@model Lijecnicki
+
+@{
+    /*ViewBag.Title = "Ažuriranje: " + Model.Ime + " " + Model.Prezime;*/
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h2>Ažuriranje podatka o liječnićkom pregledu</h2>
+<h3>@Model.KorisnickoIme  </h3>
+
+
+@using (Html.BeginForm("Azuriraj1", "Lijecnicki", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "Ispravite podatke!");
+
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Id, new { @class = "col-sm-2 control-label" })
+        <div class="col-sm-10">
+            @Html.TextBoxFor(model => model.Id, new { disabled = true, @class = "form-control" })
+
+        </div>
+    </div>
+
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.KorisnickoIme, new { @class = "col-sm-2 control-label" })
+        <div class="col-sm-10">
+            @Html.DropDownListFor(model => model.KorisnickoIme, new SelectList(ViewBag.Funkcije, "KorisnickoIme", "KorisnickoIme", ""), new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.KorisnickoIme, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Mjesto, new { @class = "col-sm-2 control-label" })
+        <div class="col-sm-10">
+            @Html.TextBoxFor(model => model.Mjesto, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Mjesto, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.NazivBolnice, new { @class = "col-sm-2 control-label" })
+        <div class="col-sm-10">
+            @Html.TextBoxFor(model => model.NazivBolnice, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.NazivBolnice, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+    if (ViewBag.Razlika < 1)
+    {
+        <div class="form-group">
+            @Html.LabelFor(model => model.DatumLijecnickog, new { @class = "col-sm-2 control-label" })
+            <div class="col-sm-10">
+                @Html.EditorFor(model => model.DatumLijecnickog, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.DatumLijecnickog, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Obavljen, new { @class = "col-sm-2 control-label" })
+            <div class="col-sm-10">
+                @Html.CheckBoxFor(model => model.Obavljen)
+                @Html.ValidationMessageFor(model => model.Obavljen, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="form-group">
+            <div class="col-sm-10">
+                @Html.ValidationMessageFor(model => model.DatumLijecnickog, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.DatumLijecnickog)
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-10">
+                @Html.ValidationMessageFor(model => model.Obavljen, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.Obavljen)
+            </div>
+        </div>
+    }
+
+
+
+
+
+
+
+
+
+  
+   
+
+    <!-- Modal -->
+    <div id="confirmModal" class="modal">
+        <div class="modal-content">
+            <p>Jeste li sigurni da želite da spremite podatke?</p>
+            <button id="confirmYes" class="btn btn-success">Da</button>
+            <button id="confirmNo" class="btn btn-danger">Ne</button>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="button" class="btn btn-success" id="saveButton">
+                <span class="glyphicon glyphicon-floppy-disk" aria-hidden="false"></span> Spremi
+            </button>
+        </div>
+    </div>
+
+    @section Scripts {
+        <script type="text/javascript">
+            document.getElementById("saveButton").onclick = function () {
+                document.getElementById("confirmModal").style.display = "block";
+            }
+
+            document.getElementById("confirmYes").onclick = function () {
+                document.getElementById("confirmModal").style.display = "none";
+                document.querySelector("form").submit(); // Podnošenje forme
+            }
+
+            document.getElementById("confirmNo").onclick = function () {
+                document.getElementById("confirmModal").style.display = "none";
+            }
+
+            window.onclick = function (event) {
+                if (event.target == document.getElementById("confirmModal")) {
+                    document.getElementById("confirmModal").style.display = "none";
+                }
+            }
+        </script>
+    }
+
+    <style>
+        /* Modal styling */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 30%;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+            .modal-content button {
+                margin: 10px;
+            }
+    </style>
+
+}
+@Html.ActionLink("Povratak bez spremanja", "Index", "Lijecnicki")

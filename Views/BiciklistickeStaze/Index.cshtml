@@ -1,0 +1,29 @@
+﻿@model IEnumerable<BiciklistickiKlub.Models.BiciklistickaStaza>
+
+@{
+    ViewBag.Title = "Bike Routes";
+}
+
+<h2>Bike Routes</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Route Name</th>
+            <th>Entered By</th>
+            <th>Date</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var route in Model)
+        {
+            <tr>
+                <td>@route.Ime</td>
+                <td>@route.UserId</td> <!-- Prikaz korisnika -->
+                <td>@route.Datum.ToString("dd.MM.yyyy")</td>
+                <td>@Html.ActionLink("View on Map", "Details", new { id = route.Id })</td>
+            </tr>
+        }
+    </tbody>
+</table>

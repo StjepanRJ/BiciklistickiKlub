@@ -1,0 +1,85 @@
+﻿
+@{
+    ViewBag.Title = "Postovi";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@model IEnumerable<BiciklistickiKlub.Models.Post>
+<h2>Tema @ViewBag.TemaIme</h2>
+<h3>Postovi</h3>
+
+
+@foreach (var post in Model)
+{
+    <div class="veliki-okvir" ,="card-body">
+        <div class="container mt-4">
+            <div class="card mb-3">
+                <div class="card-body">
+                    @if (post.Pitanje != null)
+                    {
+                        <div class="uokvireni-tekst">
+                            <p class="text-muted"> Citat autora: @post.KorisnickoImePitanje : </p>
+                            <p>@post.Pitanje </p>
+                        </div>
+                    }
+                <div class="uokvireni-tekst1">
+                    @if(post.Pitanje != null)
+                    {
+                       <p>Odgovor:</p>
+                     }
+                    
+                    <p>@post.Sadrzaj</p
+                                                                                                      >
+                </div>
+                    <p class="text-muted">Autor: @post.KorisnickoIme - @post.DatumKreiranja</p>
+                    <p>@Html.ActionLink("Odgovori", "Odgovor", new { temaId = ViewBag.TemaId, id = post.Id })    @if (User.Identity.Name == post.KorisnickoIme) 
+                                                                                                                  { 
+                                                                                                                        @Html.ActionLink("Uredi", "UrediPost", new { id = post.Id})
+                                                                                                                  }</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+}
+
+<p>@Html.ActionLink("Novi Post", "NoviPost", new { temaId = ViewBag.TemaId })</p>
+
+<title>Uokvireni Tekst</title>
+<style>
+    .veliki-okvir {
+        border: 3px solid #007bff; /* Glavni okvir */
+        background-color: #e9f5ff; /* Pozadinska boja za glavni okvir */
+        padding: 15px; /* Razmak unutar glavnog okvira */
+        border-radius: 10px; /* Zaobljeni uglovi za glavni okvir */
+        max-width: 110%; /* Ograničava širinu okvira */
+        box-sizing: border-box; /* Uključuje padding i border u ukupnu širinu */
+        margin-bottom: 20px; /* Razmak ispod glavnog okvira */
+        word-break: break-word;
+        font-size: 16px;
+    }
+    .uokvireni-tekst {
+        border: 2px solid #007bff; /* Boja okvira */
+        background-color: #f0f8ff; /* Boja pozadine */
+        padding: 10px; /* Unutarnji razmak */
+        border-radius: 5px; /* Zaobljeni uglovi */
+        color: #333; /* Boja teksta */
+        font-size: 16px; /* Veličina teksta */
+        margin-bottom: 15px; /* Donji razmak */
+        max-width: 90%; /* Ovo osigurava da okvir ne prelazi širinu roditeljskog elementa */
+        box-sizing: border-box; /* Uključuje padding i border u ukupnu širinu i visinu elementa */
+    
+    }
+    .uokvireni-tekst1 {
+        border: 2px solid #007bff; /* Boja okvira */
+        background-color: antiquewhite; /* Boja pozadine */
+        padding: 10px; /* Unutarnji razmak */
+        border-radius: 5px; /* Zaobljeni uglovi */
+        color: #333; /* Boja teksta */
+        font-size: 16px; /* Veličina teksta */
+        margin-bottom: 15px; /* Donji razmak */
+        max-width: 90%; /* Ovo osigurava da okvir ne prelazi širinu roditeljskog elementa */
+        box-sizing: border-box; /* Uključuje padding i border u ukupnu širinu i visinu elementa */
+    }
+</style>

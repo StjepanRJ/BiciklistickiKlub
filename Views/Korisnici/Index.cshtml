@@ -1,12 +1,19 @@
 ﻿@using BiciklistickiKlub.Models
 @model List<Korisnik>
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Popis korisnika";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>@ViewBag.Title</h2>
 
+@using (Html.BeginForm("Index", "Korisnici", FormMethod.Get))
+            {
+                <p>
+                    Naziv: @Html.TextBox("naziv")
+                    <input type="submit" value="Traži" />
+                </p>
+            }
 <table class="table table-striped">
     <thead>
         <tr>
@@ -19,8 +26,7 @@
     <tbody>
         @foreach(var kor in Model)
         {
-            if (kor.Aktivan == true)
-            {
+           
                 
                 <tr>
                     <td>@kor.KorisnickoIme</td>
@@ -28,8 +34,15 @@
                     <td>@kor.PrezimeIme</td>
                     <td>@(kor.Ovlast?.Naziv)</td>
                     <td>@Html.ActionLink("Ažuriraj", "Azuriraj", new { email = kor.Email })</td>
+                    <!-- Ovdje bi bio i drugi inputi za temu
+    <td>
+        <a href="@Url.Action("Azuriraj","Lijecnicki", new {PrezimeIme = kor.KorisnickoIme})" class="btn btn-success ">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Kreiranje novog pregleda
+        </a>
+    </td>
+        -->
                 </tr>
-            }
+            
         }
 
     </tbody>

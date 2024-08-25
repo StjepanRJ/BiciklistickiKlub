@@ -1,0 +1,31 @@
+﻿
+@{
+    ViewBag.Title = "Teme";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model IEnumerable<BiciklistickiKlub.Models.Tema>
+
+<h2>Teme</h2>
+
+
+<div class="container mt-4">
+    <div class="row">
+        @foreach (var tema in Model)
+        {
+            <div class="col-md-4">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h4 class="card-title">@tema.Naslov</h4>
+                        <!--<p class="card-text">@tema.KategorijaId</p>
+     <p class="card-text"><small class="text-muted">Objavljeno: @tema.Id</small></p> -->
+                        <a href="@Url.Action("Postovi", "Forum", new { temaId = tema.Id })" class="btn btn-primary">Pročitaj više</a>
+                    </div>
+                </div>
+            </div>
+        }
+        
+    </div>
+</div>
+
+<p>@Html.ActionLink("Nova Tema", "NovaTema", new { kategorijaId = ViewBag.KategorijaId })</p>

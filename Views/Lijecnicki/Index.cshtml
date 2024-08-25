@@ -5,9 +5,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>@ViewBag.Title</h2>
+<h2>Popis liječnićkih pregleda </h2>
 <a href="@Url.Action("Azuriraj","Lijecnicki")" class="btn btn-success ">
-    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Kreiranje novog člana
+    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Kreiranje novog pregleda
 </a>
 
 
@@ -15,6 +15,7 @@
     <thead>
         <tr>
             <th>Korisničko ime</th>
+            
             <th>Mjesto</th>
             <th>Naziv bolnice</th>
             <th>Datum</th>
@@ -28,14 +29,22 @@
 
             <tr>
                 <td>@kor.KorisnickoIme</td>
+               
                 <td>@kor.Mjesto</td>
                 <td>@kor.NazivBolnice</td>
-                <td>@kor.DatumLijecnickog</td>
-                <td>@kor.Obavljen</td>
+                <td>@kor.DatumLijecnickog.ToString("dd.MM.yyyy")</td>
+                @if(kor.Obavljen)
+                {
+                    <td>DA</td>
+                }
+else
+                {
+                    <td>NE</td>
+                }
                 <td>
 
                     
-                    @Html.ActionLink("Ažuriraj", "Azuriraj", new { id = kor.Id }, new { @class = "btn btn-info btn-sm" })
+                    @Html.ActionLink("Ažuriraj", "Azuriraj1", new { id = kor.Id }, new { @class = "btn btn-info btn-sm" })
                    
                 </td>
             </tr>

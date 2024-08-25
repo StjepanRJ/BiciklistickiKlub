@@ -23,17 +23,25 @@ namespace BiciklistickiKlub.Controllers
     [Authorize(Roles = OvlastiKorisnik.Administrator)]
     public class KorisniciController : Controller
     {
+        private readonly EmailService _emailService = new EmailService();
+
+       
+
         BazaDbContext bazaPodataka = new BazaDbContext();
         LogiranKorisnik logi;
         // GET: Korisnici
-        public ActionResult Index()
+        public ActionResult Index(string naziv)
         {
+
             var listaKorisnika = bazaPodataka.PopisKorisnika.OrderBy(x => x.SifraOvlasti).ThenBy(x => x.Prezime).ToList();
-            
-            return View(listaKorisnika);
+
+            if (!String.IsNullOrWhiteSpace(naziv))
+                listaKorisnika = listaKorisnika.Where(x => x.PrezimeIme.ToUpper().Contains(naziv.ToUpper())).ToList();
+
+                return View(listaKorisnika);
         }
 
-        [HttpGet,Authorize]
+        [HttpGet,Authorize,AllowAnonymous]
         public ActionResult PromjenaLozinke()
         {
 
@@ -41,12 +49,15 @@ namespace BiciklistickiKlub.Controllers
 
         }
 
-        [HttpPost, Authorize, ValidateAntiForgeryToken]
+        [HttpPost, Authorize, ValidateAntiForgeryToken,AllowAnonymous]
         public ActionResult PromjenaLozinke(PromjenaLozinke pl)
         {
+            
+            
             if (ModelState.IsValid)
             {
                 LogiranKorisnik k = new LogiranKorisnik();
+                
                 
                 var loz = Misc.PasswordHelper.IzracunajHash(pl.StaraLozinka);
 
@@ -66,7 +77,11 @@ namespace BiciklistickiKlub.Controllers
                 bazaPodataka.Entry(korisnik).State = System.Data.Entity.EntityState.Modified;
 
                 bazaPodataka.SaveChanges();
+                if (korisnik.SifraOvlasti == "MO")
+                {
+                    return RedirectToAction("Index", "Home");
 
+                }
                 return RedirectToAction("Index");
             }
             return View();
@@ -170,17 +185,14 @@ namespace BiciklistickiKlub.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         
-        public async Task<ActionResult> Azuriraj( Korisnik k)
+        public ActionResult Azuriraj( Korisnik k)
         {
             
             if (!ModelState.IsValid)
             {
                 k.LozinkaUnos = "1";
                 k.LozinkaUnos2 = "1";
-                if(k.Aktivan == true)
-                {
-                    await ProvjeriIPosaljiObavijesti(k);
-                }
+              
                 bazaPodataka.Entry(k).State = System.Data.Entity.EntityState.Modified;
                 
                 bazaPodataka.SaveChanges();
@@ -202,7 +214,7 @@ namespace BiciklistickiKlub.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public ActionResult Registracija(Korisnik model)
+        public async Task<ActionResult> Registracija(Korisnik model)
         {
             if (!String.IsNullOrWhiteSpace(model.KorisnickoIme))
             {
@@ -227,7 +239,11 @@ namespace BiciklistickiKlub.Controllers
             {
                 model.Lozinka = Misc.PasswordHelper.IzracunajHash(model.LozinkaUnos);
                 model.SifraOvlasti = "MO";
-                model.Aktivan = false;
+                model.Aktivan = true;
+                string subject = "Potvrda registracije";
+                string body = $"Poštovani {model.KorisnickoIme},<br/><br/>Hvala što ste se registrirali. Vaš račun je uspješno kreiran.";
+
+                await _emailService.SendEmailAsync(model.Email, subject, body);
 
                 bazaPodataka.PopisKorisnika.Add(model);
                 bazaPodataka.SaveChanges();
@@ -241,65 +257,8 @@ namespace BiciklistickiKlub.Controllers
             return View(model);
         }
 
-        private string GetKorisnikovEmail(string korisnikId)
-        {
-            var korisnik = bazaPodataka.PopisKorisnika.FirstOrDefault(u => u.KorisnickoIme == korisnikId);
-            if (korisnik != null)
-            {
-                return korisnik.Email;
-            }
-            return "Nema email adrese za korisnika";
-        }
+        
 
-        // Funkcija za slanje maila korisniku ako se danasnji datum poklapa sa datumom neke aktivnosti
-        private async Task ProvjeriIPosaljiObavijesti(Korisnik k)
-        {
-            DateTime currentDate = DateTime.Now.Date;
-           
-
-          
-            
-                
-                        string toEmail = k.Email;
-                        string subject = $"Podsjetnik: Planirana aktivnost - ";
-                        string body = $"Poštovani ,<br />" +
-              $"Želimo vas podsjetiti na nadolazeću aktivnost koja je planirana za .<br /> Detalji aktivnosti su sljedeći:<br />" +
-              $"Naziv aktivnosti: <br />" +
-              $"Vrsta aktivnosti: <br />" +
-              $"Srdačan pozdrav";
-
-
-                        string apiKey = "7B5L2GFJ1D51USS2PSFMD18P";
-                        await SendEmail(apiKey, toEmail, subject, body);
-                        /*
-                        // Ažurirajte datum poslednje obavijesti
-                        aktivnost.PoslednjaObavijest = DateTime.Now;
-                        db.Entry(aktivnost).State = EntityState.Modified;
-                        await db.SaveChangesAsync();
-                        */
-                    
-                
-            
-        }
-
-
-        private async Task SendEmail(string apiKey, string toEmail, string subject, string body)
-        {
-            var client = new SendGridClient(apiKey);
-            var from = new EmailAddress("s77074207@gmail.com", "Activity Tracker");
-            var to = new EmailAddress(toEmail);
-            var msg = MailHelper.CreateSingleEmail(from, to, subject, body, body);
-            var response = await client.SendEmailAsync(msg);
-
-        }
-
-        public ActionResult Lijecnicki()
-        {
-
-
-            var listaKorisnika = bazaPodataka.PopisKorisnika.OrderBy(x => x.SifraOvlasti).ThenBy(x => x.Prezime).ToList();
-
-            return View(listaKorisnika);
-        }
+       
     }
 }

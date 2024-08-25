@@ -1,0 +1,50 @@
+﻿@model BiciklistickiKlub.Models.Post
+@{
+    ViewBag.Title = "Odgovor";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Odgovor</h2>
+
+
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        @Html.LabelFor(model => model.Pitanje, new { @class = "col-sm-2 control-label" })
+        <div class="col-sm-10">
+            @Html.TextBoxFor(model => model.Pitanje, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Pitanje, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div>
+        @Html.LabelFor(m => m.Sadrzaj)
+        @Html.TextAreaFor(m => m.Sadrzaj)
+    </div>
+    <div>
+        @Html.ValidationMessageFor(model => model.TemaId, "", new { @class = "text-danger" })
+        @Html.HiddenFor(m => m.TemaId)
+
+    </div>
+    <div>
+        @Html.ValidationMessageFor(model => model.KorisnickoIme, "", new { @class = "text-danger" })
+        @Html.HiddenFor(m => Model.KorisnickoIme)
+
+    </div>
+    <div>
+        @Html.ValidationMessageFor(model => model.DatumKreiranja, "", new { @class = "text-danger" })
+        @Html.HiddenFor(m => m.DatumKreiranja)
+
+    </div>
+    <div>
+        @Html.ValidationMessageFor(model => model.KorisnickoImePitanje, "", new { @class = "text-danger" })
+        @Html.HiddenFor(m => m.KorisnickoImePitanje)
+
+    </div>
+    <input type="submit" value="Kreiraj" />
+
+}
+
+

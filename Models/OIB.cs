@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Ajax.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,7 +10,9 @@ namespace BiciklistickiKlub.Models
     {
         public static bool CheckOIB(string oib)
         {
-           //if (oib.Length != 11) return false;
+            if (oib == null) return false;
+
+            if (oib.Length != 11 ) return false;
 
             long b;
             if (!long.TryParse(oib, out b)) return false;
